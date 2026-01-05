@@ -12,6 +12,7 @@ public enum ErrorMessage {
     BELOW_MIN_LENGTH("최소 길이 %d 미만입니다."),
     INVALID_PRODUCT_PROMOTION("상품 데이터에 저장된 프로모션 정보가 존재하지 않습니다."),
     NOT_EXISTS_PRODUCT("상품 데이터에 해당 상품이 존재하지 않습니다."),
+    INVALID_ORDER_REQUEST_FORMAT("올바른 상품 주문 형식이 아닙니다."),
 
     INVALID_MENU_NUMBER("존재하지 않는 메뉴를 선택하셨습니다."),
     EMPTY_CSV_VALUE("비어있는 항목이 존재합니다.");

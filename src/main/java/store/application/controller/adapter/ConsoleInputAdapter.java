@@ -1,9 +1,9 @@
 package store.application.controller.adapter;
 
 import store.application.service.request.OrderProductRequest;
-import store.application.service.response.ProductResponse;
 import store.application.view.ConsoleInputView;
 import store.application.view.ConsoleOutputView;
+import store.common.utils.CSVParser;
 
 import java.util.List;
 
@@ -16,10 +16,13 @@ public class ConsoleInputAdapter {
         this.inputView = inputView;
     }
 
-    public List<OrderProductRequest> readOrderRequest(List<ProductResponse> productResponses) {
-        outputView.printProductsInformation(productResponses);
+    public List<OrderProductRequest> readOrderRequest() {
         outputView.printOnboardingMessage("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])");
-        return null;
+        String line = inputView.readLine();
+        List<String> rawOrderProduct = CSVParser.split(line);
+        return rawOrderProduct.stream()
+                .map(OrderProductRequestConverter::toOrderProductRequest)
+                .toList();
     }
 
     public String readMenuNumber() {
