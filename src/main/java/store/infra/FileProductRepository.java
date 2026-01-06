@@ -3,25 +3,43 @@ package store.infra;
 import store.common.error.ErrorMessage;
 import store.common.utils.CSVParser;
 import store.common.utils.TypeConverter;
-import store.domain.Product;
-import store.domain.ProductRepository;
-import store.domain.Promotion;
-import store.domain.PromotionProduct;
+import store.domain.product.Product;
+import store.domain.product.ProductRepository;
+import store.domain.product.Promotion;
+import store.domain.product.PromotionProduct;
 import store.io.FileReader;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class FileProductRepository implements ProductRepository {
     private final FileReader fileReader = new FileReader();
     private static final Path productPath = Path.of("src/main/resources/products.md");
     private static final Path promotionPath = Path.of("src/main/resources/promotions.md");
+    private final List<Product> products;
+
+    public FileProductRepository() {
+        products = initProducts();
+    }
+
+    @Override
+    public Optional<Product> findByProductName(String productName) {
+        List<Product> products = findAllProducts();
+        return products.stream()
+                .filter(product -> product.isSameName(productName))
+                .findFirst();
+    }
 
     @Override
     public List<Product> findAllProducts() {
+        return products;
+    }
+
+    public List<Product> initProducts() {
         List<String> rawProductLine = fileReader.readAllLines(productPath);
         return mapToProduct(rawProductLine);
     }
