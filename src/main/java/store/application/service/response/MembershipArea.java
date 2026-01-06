@@ -1,6 +1,6 @@
 package store.application.service.response;
 
-public record MembershipResponse(
+public record MembershipArea(
         int memberShipDiscountAmount
 ) {
 }

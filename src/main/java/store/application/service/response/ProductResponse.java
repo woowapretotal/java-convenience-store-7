@@ -1,6 +1,6 @@
 package store.application.service.response;
 
-import store.domain.Product;
+import store.domain.product.Product;
 
 public record ProductResponse(
         String name,

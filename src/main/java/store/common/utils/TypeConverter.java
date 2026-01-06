@@ -18,6 +18,17 @@ public class TypeConverter {
         }
     }
 
+    public static boolean toBoolean(String line) {
+        if (line.equals("Y")) {
+            return true;
+        }
+        if (line.equals("N")) {
+            return false;
+        }
+
+        throw new ApplicationException(ErrorMessage.INVALID_Y_N_FORMAT);
+    }
+
     public static double toDecimal(String line) {
         try {
             return Double.parseDouble(line);

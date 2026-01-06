@@ -1,6 +1,6 @@
 package store.application.service.request;
 
-public record OrderProductRequest(
+public record PurchaseProductRequest(
         String name,
         int quantity
 ) {

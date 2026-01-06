@@ -1,8 +1,8 @@
 package store.application.service;
 
 import store.application.service.response.ProductResponse;
-import store.domain.Product;
-import store.domain.ProductRepository;
+import store.domain.product.Product;
+import store.domain.product.ProductRepository;
 
 import java.util.List;
 

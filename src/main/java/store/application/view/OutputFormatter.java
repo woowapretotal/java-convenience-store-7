@@ -59,7 +59,7 @@ public final class OutputFormatter {
         return "%d개".formatted(stock);
     }
 
-    public static String formatOrder(final OrderResponse order) {
+    public static String formatOrder(final PurchaseArea order) {
         String orderHeader = "%-8s".formatted("상품명")
                 + "%-6s".formatted("수량")
                 + "%-6s".formatted("금액")
@@ -73,15 +73,16 @@ public final class OutputFormatter {
     private static String formatOrderProductChunk(final ProductChunk productChunk) {
         return "%-8s".formatted(productChunk.productName())
                 + "%-6s".formatted(String.valueOf(productChunk.quantity()))
-                + "%-6s".formatted(MoneyFormatter.formatInteger(productChunk.chunkPrice()));
+                + "%-6s".formatted(MoneyFormatter.formatInteger(productChunk.chunkAmount()));
     }
 
-    public static String formatGift(final GiftResponse gift) {
+    public static String formatGift(final GiftArea gift) {
         return gift.productChunks().stream()
+                .filter(giftChunk -> giftChunk.chunkAmount() != 0)
                 .map(OutputFormatter::formatGiftProductChunk)
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
-
+    
     private static String formatGiftProductChunk(final ProductChunk productChunk) {
         return "%-8s".formatted(productChunk.productName())
                 + "%-6s".formatted(String.valueOf(productChunk.quantity()));
@@ -89,14 +90,14 @@ public final class OutputFormatter {
 
     public static String formatPriceInfo(final ReceiptResponse receipt) {
         return String.join(LINE_SEPARATOR,
-                formatTotalOrderAmount(receipt.orderResponse()),
-                formatGiftAmount(receipt.giftResponse()),
-                formatMemberShipAmount(receipt.membershipResponse()),
+                formatTotalOrderAmount(receipt.purchaseArea()),
+                formatGiftAmount(receipt.giftArea()),
+                formatMemberShipAmount(receipt.membershipArea()),
                 formatPayAmount(receipt.payAmount())
         );
     }
 
-    private static String formatTotalOrderAmount(final OrderResponse order) {
+    private static String formatTotalOrderAmount(final PurchaseArea order) {
         int totalQuantity = order.productChunks().stream()
                 .map(ProductChunk::quantity)
                 .mapToInt(Integer::intValue)
@@ -104,17 +105,17 @@ public final class OutputFormatter {
 
         return "%-8s".formatted("총구매액")
                 + "%-6s".formatted(String.valueOf(totalQuantity))
-                + "%-6s".formatted(MoneyFormatter.formatInteger(order.totalOrderAmount()));
+                + "%-6s".formatted(MoneyFormatter.formatInteger(order.totalOriginAmount()));
     }
 
-    private static String formatGiftAmount(final GiftResponse giftResponse) {
+    private static String formatGiftAmount(final GiftArea giftArea) {
         return "%-14s".formatted("행사할인")
-                + "%-6s".formatted(MoneyFormatter.minusFormat(giftResponse.totalGiftAmount()));
+                + "%-6s".formatted(MoneyFormatter.minusFormat(giftArea.totalGiftAmount()));
     }
 
-    private static String formatMemberShipAmount(final MembershipResponse membershipResponse) {
+    private static String formatMemberShipAmount(final MembershipArea membershipArea) {
         return "%-14s".formatted("멤버십할인")
-                + "%-6s".formatted(MoneyFormatter.minusFormat(membershipResponse.memberShipDiscountAmount()));
+                + "%-6s".formatted(MoneyFormatter.minusFormat(membershipArea.memberShipDiscountAmount()));
     }
 
     private static String formatPayAmount(final int payAmount) {

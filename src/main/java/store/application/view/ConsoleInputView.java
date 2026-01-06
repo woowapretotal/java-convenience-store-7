@@ -5,8 +5,8 @@ import store.common.utils.TypeConverter;
 
 public class ConsoleInputView {
 
-    public int readNumber() {
-        return TypeConverter.toInteger(readLine());
+    public boolean readTF() {
+        return TypeConverter.toBoolean(Console.readLine());
     }
 
     public String readLine() {

@@ -1,9 +1,9 @@
 package store.application.service.response;
 
 public record ReceiptResponse(
-        OrderResponse orderResponse,
-        GiftResponse giftResponse,
-        MembershipResponse membershipResponse,
+        PurchaseArea purchaseArea,
+        GiftArea giftArea,
+        MembershipArea membershipArea,
         int payAmount
 ) {
 }

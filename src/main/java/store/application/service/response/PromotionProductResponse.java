@@ -1,13 +1,14 @@
 package store.application.service.response;
 
-import store.domain.PromotionProduct;
+import store.domain.product.NullPromotionProduct;
+import store.domain.product.PromotionProduct;
 
 public record PromotionProductResponse(
         String promotionName,
         int promotionStock
 ) {
     public static PromotionProductResponse from(final PromotionProduct promotionProduct) {
-        if (promotionProduct == null) {
+        if (promotionProduct instanceof NullPromotionProduct) {
             return null;
         }
 

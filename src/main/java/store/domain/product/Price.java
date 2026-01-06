@@ -1,4 +1,4 @@
-package store.domain;
+package store.domain.product;
 
 import store.common.error.DomainException;
 import store.common.error.ErrorMessage;

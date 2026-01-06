@@ -2,10 +2,11 @@ package store.config;
 
 import store.application.controller.StoreController;
 import store.application.controller.adapter.ConsoleInputAdapter;
+import store.application.service.OrderService;
 import store.application.service.ProductService;
 import store.application.view.ConsoleInputView;
 import store.application.view.ConsoleOutputView;
-import store.domain.ProductRepository;
+import store.domain.product.ProductRepository;
 import store.infra.FileProductRepository;
 
 public class AppConfig {
@@ -21,9 +22,10 @@ public class AppConfig {
 
     // == application service ==
     private final ProductService productService = new ProductService(productRepository);
+    private final OrderService orderService = new OrderService(productRepository);
 
     // == controller ==
-    private final StoreController storeController = new StoreController(productService, inputAdapter, outputView);
+    private final StoreController storeController = new StoreController(productService, orderService, inputAdapter, outputView);
 
     public ConsoleInputAdapter inputAdapter() {
         return inputAdapter;

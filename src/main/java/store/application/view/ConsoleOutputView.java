@@ -27,12 +27,12 @@ public class ConsoleOutputView {
         String formattedProducts = OutputFormatter.formatProducts(products);
         System.out.println(formattedProducts + BLANK_AND_NEW_LINE.get());
     }
-    
+
     public void printReceipt(final ReceiptResponse receipt) {
         System.out.println("==============W 편의점================");
-        System.out.println(OutputFormatter.formatOrder(receipt.orderResponse()));
+        System.out.println(OutputFormatter.formatOrder(receipt.purchaseArea()));
         System.out.println("=============증 정===============");
-        System.out.println(OutputFormatter.formatGift(receipt.giftResponse()));
+        System.out.println(OutputFormatter.formatGift(receipt.giftArea()));
         System.out.println("====================================");
         System.out.print(OutputFormatter.formatPriceInfo(receipt) + BLANK_AND_NEW_LINE.get());
     }

@@ -1,6 +1,6 @@
 package store.application.controller.adapter;
 
-import store.application.service.request.OrderProductRequest;
+import store.application.service.request.PurchaseProductRequest;
 import store.application.view.ConsoleInputView;
 import store.application.view.ConsoleOutputView;
 import store.common.utils.CSVParser;
@@ -16,7 +16,7 @@ public class ConsoleInputAdapter {
         this.inputView = inputView;
     }
 
-    public List<OrderProductRequest> readOrderRequest() {
+    public List<PurchaseProductRequest> readOrderRequest() {
         outputView.printOnboardingMessage("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])");
         String line = inputView.readLine();
         List<String> rawOrderProduct = CSVParser.split(line);
@@ -25,9 +25,18 @@ public class ConsoleInputAdapter {
                 .toList();
     }
 
-    public String readMenuNumber() {
-        /*outputView.printMenus();
-        return inputView.readLine();*/
-        return null;
+    public boolean readOptionFromErrorMessage(String errorMessage) {
+        outputView.printOnboardingMessage(errorMessage);
+        return inputView.readTF();
+    }
+
+    public boolean readMemberShipOption() {
+        outputView.printOnboardingMessage("멤버십 할인을 받으시겠습니까? (Y/N)");
+        return inputView.readTF();
+    }
+
+    public boolean readContinuePurchaseOption() {
+        outputView.printOnboardingMessage("감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)");
+        return inputView.readTF();
     }
 }
